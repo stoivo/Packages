@@ -12,12 +12,26 @@ contexts:
     - match: ''
       push: 'scope:text.html.basic'
       with_prototype:
+
+        - match: "<%= javascript_tag do"
+          scope: punctuation.section.embedded.ruby
+          push:
+            - match: <%\s*end\s*%>
+              scope: shit.buster
+              pop: true
+            - match: \%\>\s*
+              scope: asdadasdas.asdf.sdafs.df.sdaf.sdf
+              embed: scope:source.js
+              embed_scope: source.js.embedded.html
+              escape: <%\s*end\s*%>
+
         - match: "<%+#"
           scope: punctuation.definition.comment.erb
           push:
             - meta_scope: comment.block.erb
             - match: "%>"
               pop: true
+
         - match: "<%+(?!>)[-=]?"
           scope: punctuation.section.embedded.ruby
           push:
